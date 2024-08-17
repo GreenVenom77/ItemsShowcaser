@@ -41,14 +41,14 @@ class HomeFrag : Fragment() {
     }
 
     private fun fetchProductsAndUpdateUI() {
-        adapter = HomeRecyclerViewAdapter(requireContext(), emptyList()) { productId ->
+        adapter = HomeRecyclerViewAdapter { productId ->
             navigateToDetails(productId)
         }
         itemsView.adapter = adapter
         itemsView.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        viewModel.productsResponse.observe(viewLifecycleOwner, Observer { productsResponse ->
-            adapter.updateProducts(productsResponse.products)
+        viewModel.products.observe(viewLifecycleOwner, Observer { products ->
+            adapter.updateProducts(products)
         })
     }
 }

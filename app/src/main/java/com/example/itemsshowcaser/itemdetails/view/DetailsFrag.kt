@@ -53,7 +53,7 @@ class DetailsFrag : Fragment() {
     }
 
     private fun fetchProductDetails(productId: Int) {
-        val product = viewModel.productsResponse.value?.products?.get(productId)
+        val product = viewModel.products.value?.get(productId)
         title.text = product?.title
         brand.text = product?.brand
         price.text = "Price: $${product?.price}"

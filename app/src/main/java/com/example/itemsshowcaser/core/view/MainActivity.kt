@@ -9,17 +9,22 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.itemsshowcaser.R
+import com.example.itemsshowcaser.core.model.datasource.ProductsDatabase
+import com.example.itemsshowcaser.core.model.datasource.LocalDataSourceImpl
 import com.example.itemsshowcaser.core.viewmodel.CoreViewModel
 import com.example.itemsshowcaser.core.viewmodel.CoreViewModelFactory
 import com.example.itemsshowcaser.core.model.service.ProductsApi
-import com.example.itemsshowcaser.core.model.repository.RemoteDataSourceImpl
+import com.example.itemsshowcaser.core.model.datasource.RemoteDataSourceImpl
 import com.example.itemsshowcaser.core.model.repository.Repository
 import com.example.itemsshowcaser.core.model.repository.RepositoryImpl
 
 class MainActivity : AppCompatActivity() {
     private val repository: Repository by lazy {
         val remote = RemoteDataSourceImpl(ProductsApi.service)
-        RepositoryImpl(remote)
+        val database = ProductsDatabase.getDatabaseInstance(applicationContext)
+        val productsDao = database.productsDao()
+        val local = LocalDataSourceImpl(productsDao)
+        RepositoryImpl(remote, local)
     }
     private val viewModelFactory: CoreViewModelFactory by lazy {
         CoreViewModelFactory(repository)
@@ -38,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this, viewModelFactory)[CoreViewModel::class.java]
         viewModel.getProductsResponse()
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

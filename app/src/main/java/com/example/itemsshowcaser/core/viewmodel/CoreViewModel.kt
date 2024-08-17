@@ -4,17 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.itemsshowcaser.core.model.ProductsResponse
+import com.example.itemsshowcaser.core.model.Product
 import com.example.itemsshowcaser.core.model.repository.Repository
 import kotlinx.coroutines.launch
 
 class CoreViewModel(private val repository: Repository): ViewModel() {
-    private val _productsResponse = MutableLiveData<ProductsResponse>()
-    val productsResponse: LiveData<ProductsResponse> get() = _productsResponse
+    private val _products = MutableLiveData<List<Product>>()
+    val products: LiveData<List<Product>> get() = _products
 
     fun getProductsResponse() {
         viewModelScope.launch {
-            _productsResponse.postValue(repository.getProducts())
+            val productsList = repository.getProducts()
+            _products.postValue(productsList)
+            repository.setDataLocally(productsList)
         }
     }
 }
