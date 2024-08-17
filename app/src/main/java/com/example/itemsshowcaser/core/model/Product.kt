@@ -1,10 +1,16 @@
 package com.example.itemsshowcaser.core.model
 
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.itemsshowcaser.itemdetails.model.Review
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "products")
 data class Product(
+    @SerializedName("id")
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
     @SerializedName("availabilityStatus")
     val availabilityStatus: String,
     @SerializedName("brand")
@@ -13,16 +19,14 @@ data class Product(
     val category: String,
     @SerializedName("description")
     val description: String,
-    @SerializedName("dimensions")
-    val dimensions: Dimensions,
+//    @SerializedName("dimensions")
+//    val dimensions: Dimensions,
     @SerializedName("discountPercentage")
     val discountPercentage: Double,
-    @SerializedName("id")
-    val id: Int,
     @SerializedName("images")
     val images: List<String>,
-    @SerializedName("meta")
-    val meta: Meta,
+//    @SerializedName("meta")
+//    val meta: Meta,
     @SerializedName("minimumOrderQuantity")
     val minimumOrderQuantity: Int,
     @SerializedName("price")
@@ -39,8 +43,8 @@ data class Product(
     val sku: String,
     @SerializedName("stock")
     val stock: Int,
-    @SerializedName("tags")
-    val tags: List<String>,
+//    @SerializedName("tags")
+//    val tags: List<String>,
     @SerializedName("thumbnail")
     val thumbnail: String,
     @SerializedName("title")
