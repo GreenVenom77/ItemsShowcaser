@@ -10,8 +10,7 @@ import com.example.itemsshowcaser.R
 import com.example.itemsshowcaser.itemdetails.model.Review
 
 class ReviewsRecyclerViewAdapter(
-    private val context: Context,
-    private var data: List<Review>,
+    private var data: List<Review>
 ): RecyclerView.Adapter<ReviewsRecyclerViewAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById<TextView>(R.id.reviewerName)
@@ -24,7 +23,7 @@ class ReviewsRecyclerViewAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val inflater: LayoutInflater = LayoutInflater.from(context)
+        val inflater: LayoutInflater = LayoutInflater.from(parent.context)
         val view: View = inflater.inflate(R.layout.review_row, parent, false)
         return ViewHolder(view)
     }

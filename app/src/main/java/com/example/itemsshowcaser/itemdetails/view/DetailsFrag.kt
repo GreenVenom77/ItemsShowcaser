@@ -62,7 +62,7 @@ class DetailsFrag : Fragment() {
         ratingBar.rating = product?.rating?.toFloat() ?: 0f
         description.text = product?.description
 
-        reviewsAdapter = ReviewsRecyclerViewAdapter(requireContext(), product?.reviews ?: emptyList())
+        reviewsAdapter = ReviewsRecyclerViewAdapter(product?.reviews ?: emptyList())
         reviewsView.adapter = reviewsAdapter
         reviewsView.layoutManager = LinearLayoutManager(requireContext())
 
