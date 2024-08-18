@@ -14,7 +14,7 @@ on:
 
 jobs:
   build-project:
-    need: test-project
+    needs: test-project
     runs-on: ubuntu-latest
 
     steps:
@@ -35,22 +35,19 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+            build-scan-publish: true
+            build-scan-terms-of-use-url: "https://gradle.com/terms-of-service"
+            build-scan-terms-of-use-agree: "yes"
+
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v4
-        with:
-            path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-            restore-keys: |
-            ${{ runner.os }}-gradle-
-
       # Run Build Project
       - name: Build gradle project
-        run: ./gradlew build
+        run: ./gradlew build --scan
 
       # Create APK Release
       - name: Build apk release project (APK) - ${{ env.main_project_module }} module
