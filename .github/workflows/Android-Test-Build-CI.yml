@@ -80,5 +80,5 @@ jobs:
       - name: Upload Release Version (APK)
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.repository_name }}-${{ github.date_today }}-Version
+          name: ${{ env.repository_name }}-${{ env.date_today }}-Version
           path: app/build/outputs/apk/release/${{ env.application_name }}.apk
