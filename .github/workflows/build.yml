@@ -1,11 +1,7 @@
 name: Build Project
 
 env:
-  # The name of the main module repository
-  main_project_module: app
-
-  # The name of the Play Store
-  playstore_name: Showcaser
+  application_name: Showcaser
 
 on:
   push:
@@ -53,12 +49,13 @@ jobs:
         run: ./gradlew build
 
       # Create APK Release
-      - name: Build apk release project (APK) - ${{ env.main_project_module }} module
+      - name: Build Release Version (APK)
         run: ./gradlew assemble
 
-      # Noted For Output [main_project_module]/build/outputs/apk/release/
-      - name: Upload APK Release - ${{ env.repository_name }}
+      - name: Rename Release Version (APK)
+        run: mv "./app/build/outputs/apk/release/app-release-unsigned.apk" "./app/build/outputs/apk/release/${{ emv.application_name }}.apk"
+
+      - name: Upload Release Version (APK)
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.playstore_name }} - ${{ env.repository_name }} - APK(s) release generated
-          path: ${{ env.main_project_module }}/build/outputs/apk/release/
+          path: app/build/outputs/apk/release/${{ emv.application_name }}.apk
