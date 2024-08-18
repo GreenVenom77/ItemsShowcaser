@@ -53,9 +53,9 @@ jobs:
         run: ./gradlew assemble
 
       - name: Rename Release Version (APK)
-        run: mv "./app/build/outputs/apk/release/app-release-unsigned.apk" "./app/build/outputs/apk/release/${{ emv.application_name }}.apk"
+        run: mv "./app/build/outputs/apk/release/app-release-unsigned.apk" "./app/build/outputs/apk/release/${{ env.application_name }}.apk"
 
       - name: Upload Release Version (APK)
         uses: actions/upload-artifact@v4
         with:
-          path: app/build/outputs/apk/release/${{ emv.application_name }}.apk
+          path: app/build/outputs/apk/release/${{ env.application_name }}.apk
